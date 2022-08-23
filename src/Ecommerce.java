@@ -86,9 +86,18 @@ public class Ecommerce {
 																										// updated
 																										// quantity.
 				// Asking details for order to add in OrderList.
-				System.out.println("Enter you Phone Number: ");
+				System.out.println("Enter your Phone Number: ");
 				String pNum = sc.nextLine();
-				System.out.println("Enter you Payment Mode: ");
+				try {
+					if(!isValidPhoneNo(pNum)) {
+						throw new IllegalArgumentException("Phone No. Must be of Length 10 and must contain only digits try again.");	
+						}
+				}catch(IllegalArgumentException e) {
+					e.printStackTrace();
+					disMenu(p, user, orderList);
+				}
+				
+				System.out.println("Enter Payment Mode: ");
 				String paymentMode = sc.nextLine();
 				String orderDate = formatDate(new Date()); // Formatting date as per "yyyy-mm-dd" format.
 				String shippingDate = shippingDate(orderDate); // Incrementing date by 2 Days.
@@ -218,5 +227,18 @@ public class Ecommerce {
 		String d = sdf.format(c.getTime()); // d is now the new date
 		return d;
 	}
-
+	/// Validating phone number 
+	 public static boolean isValidPhoneNo(String str) {
+		 
+		 for(int i = 0 ; i < str.length() ; i++) {
+			 if (str.charAt(i) < '0' || str.charAt(i) > '9') {
+		                return false;
+		            }
+		 }
+		 if(!str.matches("\\d{10}")) {
+			 return false ;
+		 }
+		  
+	        return true;
+	    }
 }
